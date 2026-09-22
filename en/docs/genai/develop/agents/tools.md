@@ -1,7 +1,7 @@
 ---
 sidebar_position: 3
 title: Tools
-description: Reference for adding tools to a WSO2 Integrator AI agent — connections, functions, MCP servers, and custom tools.
+description: Reference for adding tools to a WSO2 Integrator AI agent — connections, functions, MCP servers, knowledge bases, and custom tools.
 ---
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
@@ -20,7 +20,7 @@ To add a tool to an agent, select the **AI Agent** node in the agent canvas and 
 
 This opens the **Add Tool** panel, where you can choose how to add capabilities to the agent.
 
-![The Add Tool dialog with four options: Use Connection, Use Function, Use MCP Server, Create Custom Tool. Each option has a one-line description.](/img/genai/develop/agents/05-add-tool-dialog.png)
+![The Add Tool panel showing Use Connection, Use Function, Use Agent, Use MCP Server, Use Knowledge Base, and Create Custom Tool.](/img/genai/develop/agents/add-tool-knowledge-base.png)
 
 The following tool integration options are available:
 
@@ -29,6 +29,7 @@ The following tool integration options are available:
 | **Use Connection** | Use an existing WSO2 Integrator connector such as Salesforce, Gmail, MySQL, or GitHub. Each connector operation becomes available as an agent tool. |
 | **Use Function** | Expose an existing project function or standard library function as an agent tool. |
 | **Use MCP Server** | Connect to tools hosted on a remote MCP server, including custom, community, or SaaS MCP endpoints. |
+| **Use Knowledge Base** | Add a vector knowledge base using your own embedding provider and vector store, or use a knowledge base hosted on the WSO2 Integration Platform, as a tool for retrieving relevant information during agent execution. |
 | **Create Custom Tool** | Define a new tool by specifying its name, description, parameters, and return type directly from the UI. |
 
 Each option opens a dedicated configuration panel for setting up the selected tool type.
@@ -118,7 +119,44 @@ After saving, every tool exposed by the MCP server — or every tool selected in
 
 > **Tip:** A WSO2 Integrator project can also consume its own MCP service. See [Exposing a Service as MCP](../mcp/exposing-as-mcp.md).
 
-## 4. Create custom tool
+## 4. Use knowledge base
+
+Add vector knowledge bases using your own embedding provider and vector store, or use a knowledge base hosted on the WSO2 Integration Platform. You can then add these knowledge bases as tools for agents to retrieve relevant information during execution.
+
+Selecting **Use Knowledge Base** opens the **Add Tool - Use Knowledge Base** panel. Select an existing knowledge base or a knowledge base type, then select **Retrieve** to configure a retrieval tool.
+
+![Use Knowledge Base panel listing Vector Knowledge Base, Azure AI Search Knowledge Base, and WSO2 Cloud Knowledge Base.](/img/genai/develop/agents/knowledge-base-picker.png)
+
+### 4.1 Select or create a knowledge base
+
+In **Knowledge Base Instance**, select an existing instance. If you do not have one, click **Create New Knowledge Base** (or **Create knowledge base** when the list is empty).
+
+| Option | Configuration |
+|---|---|
+| **Vector Knowledge Base** | Select or create a **Vector Store** and an **Embedding Model** using your preferred embedding provider. Choose a **Chunker**, or keep the default `ai:AUTO`, enter a **Knowledge Base Name**, and click **Save**. |
+| **WSO2 Cloud Knowledge Base** | Connect to a knowledge base hosted on the WSO2 Integration Platform. See [WSO2 Cloud Knowledge Base](../components/knowledge-bases.md#wso2-cloud-knowledge-base) for selecting a hosted knowledge base or configuring its connection manually. |
+| **Azure AI Search Knowledge Base** | Connect to an Azure AI Search index. See [Azure AI Search Knowledge Base](../components/knowledge-bases.md#azure-ai-search-knowledge-base) for configuration details. |
+
+For a vector knowledge base, use **Create New Vector Store**, **Create New Embedding Provider**, and **Create New Chunker** to configure these components inline. See [Vector Stores](../components/vector-stores.md), [Embedding Providers](../components/embedding-providers.md), and [Chunkers](../components/chunkers.md) for the available options.
+
+Ensure the knowledge base contains the documents the agent needs to search. Adding a retrieval tool does not ingest documents; see [Knowledge Base actions](../components/knowledge-bases.md#available-actions) for ingestion details.
+
+### 4.2 Configure the retrieval tool
+
+![Retrieval tool configuration showing Tool Name, Description, Knowledge Base Instance, Requires Approval, and Save Tool.](/img/genai/develop/agents/knowledge-base-tool.png)
+
+| Field | Required | Description |
+|---|---|---|
+| **Tool Name** | Yes | A unique name for the tool, such as `retrieveTool`. |
+| **Description** | No | Describe what information the knowledge base contains and when the agent should search it. The agent uses this description to decide when to invoke the tool. |
+| **Knowledge Base Instance** | Yes | The knowledge base that the retrieval tool queries. Select the existing or newly created instance. |
+| **Requires Approval** | No | Enable this option to pause the tool before execution and wait for human approval. |
+
+The panel also includes **Inputs and Mapping**, **OAuth Client Configuration**, and **Result Type** sections for additional configuration.
+
+Click **Save Tool** to attach the tool to the agent. The generated tool calls the knowledge base's retrieval action and returns the matching information for the agent to use during execution.
+
+## 5. Create custom tool {#4-create-custom-tool}
 
 Use this option when you want to define a tool before implementing its logic, or when the tool requires a fully custom structure.
 
