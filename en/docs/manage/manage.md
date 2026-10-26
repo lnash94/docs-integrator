@@ -85,11 +85,11 @@ Managed backing services and resources your integrations can use.
 </PaletteCard>
 
 <PaletteCard icon="rag" href="/manage/rag-ingestion">
-  <h3 class="palette-card-title">RAG Ingestion</h3>
+  <h3 class="palette-card-title">Manage AI Services</h3>
   <ul class="palette-card-list">
-    <li>Load documents into managed vector databases</li>
-    <li>Query them</li>
-    <li>Deploy the AI agents that consume them</li>
+    <li>Create and manage knowledge bases</li>
+    <li>Ingest and retrieve enterprise data</li>
+    <li>Connect integrations and AI agents</li>
   </ul>
 </PaletteCard>
 

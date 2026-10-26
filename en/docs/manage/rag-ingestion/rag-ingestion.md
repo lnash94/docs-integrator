@@ -1,15 +1,17 @@
 ---
-sidebar_position: 1
-title: RAG Ingestion
-description: Ingest documents, manage vector databases, and query retrieval-augmented generation (RAG) applications on WSO2 Cloud - Integration Platform.
-keywords: [wso2 integrator, wso2 cloud, rag, ingestion, retrieval, vector database, agent]
+sidebar_position: 0
+sidebar_label: Overview
+title: Manage AI Services
+description: Create and manage knowledge bases, ingestion data sources, vector databases, and AI services on WSO2 Cloud - Integration Platform.
+keywords: [wso2 integrator, wso2 cloud, ai services, knowledge base, rag, ingestion, retrieval, vector database, agent]
 slug: /manage/rag-ingestion
 ---
 
-# RAG Ingestion
+# Manage AI Services
 
-Manage the data side of retrieval-augmented generation (RAG) applications: load source documents into a vector store, query them, and run the agents that consume them.
+Create and manage the cloud services that support AI-powered integrations. Configure reusable knowledge bases, keep them current with data sources, expose them through services, and use them from your integrations and AI agents.
 
+- **[Knowledge Base](./knowledge-bases.md)** — Configure a reusable vector store, embedding model, and chunking strategy, then manage its data sources and services.
 - **[Managed vector databases](./vector-databases.md)** — Create and manage the vector databases that back your knowledge bases.
 - **[RAG ingestion automation](./ingestion.md)** — Schedule ingestion to load source files into a vector store.
 - **[RAG retrieval](./retrieval.md)** — Query a vector store to retrieve relevant chunks.
