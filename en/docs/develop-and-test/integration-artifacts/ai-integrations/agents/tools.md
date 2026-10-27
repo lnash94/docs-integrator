@@ -204,7 +204,17 @@ After saving, every tool exposed by the MCP server, or every tool selected in **
 
 ## 5. Use knowledge base
 
-Selecting **Use Knowledge Base** lets you choose an existing knowledge base in the integration or browse the available knowledge base types. After you select a knowledge base, select the action to expose to the agent. The available actions depend on the knowledge base implementation and can include retrieving relevant content or ingesting documents.
+Selecting **Use Knowledge Base** lets you choose an existing knowledge base in the integration or browse the available knowledge base types.
+
+<ThemedImage
+    alt="The Add Tool - Use Knowledge Base picker in WSO2 Agent Builder. It lists productKb from the current integration and the available Vector Knowledge Base, Azure AI Search Knowledge Base, and WSO2 Cloud Knowledge Base types."
+    sources={{
+        light: useBaseUrl('/img/genai/develop/agents-v5.1/tools/17-use-knowledge-base-picker-v5.1.png'),
+        dark: useBaseUrl('/img/genai/develop/agents-v5.1/tools/17-use-knowledge-base-picker-v5.1.png'),
+    }}
+/>
+
+After you select a knowledge base, select the action to expose to the agent. The available actions depend on the knowledge base implementation and can include retrieving relevant content or ingesting documents.
 
 For example, selecting **Retrieve** on a Vector Knowledge Base opens the following tool configuration:
 
