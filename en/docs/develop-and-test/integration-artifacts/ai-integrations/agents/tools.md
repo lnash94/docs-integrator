@@ -1,7 +1,7 @@
 ---
 sidebar_position: 2
 title: Give Tools to Agent
-description: Reference for adding tools to a WSO2 Integrator AI agent, connections, functions, MCP servers, and custom tools.
+description: Reference for adding tools to a WSO2 Integrator AI agent, including connections, functions, agents, MCP servers, knowledge bases, and custom tools.
 slug: /develop-and-test/integration-artifacts/ai-integrations/agents/tools
 ---
 
@@ -46,6 +46,7 @@ The following tool integration options are available:
 | **Use Function** | Expose an existing project function or standard library function as an agent tool. |
 | **Use Agent** | Delegate to another agent, wrapped as a tool, so this agent can hand off requests and use the response. |
 | **Use MCP Server** | Connect to tools hosted on a remote MCP server, including custom, community, or SaaS MCP endpoints. |
+| **Use Knowledge Base** | Wrap a knowledge base action as a tool so the agent can retrieve relevant content or ingest documents. |
 | **Create Custom Tool** | Define a new tool by specifying its name, description, parameters, and return type directly from the UI. |
 
 Each option opens a dedicated configuration panel for setting up the selected tool type.
@@ -201,7 +202,33 @@ After saving, every tool exposed by the MCP server, or every tool selected in **
 
 > **Tip:** A WSO2 Integrator project can also consume its own MCP service. See [Exposing a Service as MCP](../mcp/exposing-as-mcp.md).
 
-## 5. Create custom tool
+## 5. Use knowledge base
+
+Selecting **Use Knowledge Base** lets you choose an existing knowledge base in the integration or browse the available knowledge base types. After you select a knowledge base, select the action to expose to the agent. The available actions depend on the knowledge base implementation and can include retrieving relevant content or ingesting documents.
+
+For example, selecting **Retrieve** on a Vector Knowledge Base opens the following tool configuration:
+
+<ThemedImage
+    alt="The Add Tool - Use Knowledge Base panel for the Vector Knowledge Base retrieve action. The Tool Name is retrieveTool, the description is prefilled, productKb is selected as the Knowledge Base Instance, and sections for Inputs and Mapping, OAuth Client Configuration, and Result Type are collapsed."
+    sources={{
+        light: useBaseUrl('/img/genai/develop/agents-v5.1/tools/16-use-knowledge-base-config-v5.1.png'),
+        dark: useBaseUrl('/img/genai/develop/agents-v5.1/tools/16-use-knowledge-base-config-v5.1.png'),
+    }}
+/>
+
+| Field | Required | Description |
+|---|---|---|
+| **Tool Name** | Yes | A unique name for the tool, prefilled from the selected knowledge base action. |
+| **Description** | No | Explains what the tool does. It is prefilled from the action, and the agent uses it to decide when to invoke the tool. |
+| **Knowledge Base Instance** | Yes | The knowledge base on which the tool runs. Select an existing instance, or click **+ Create New Knowledge Base** to create one inline. |
+| **Requires Approval** | No | Pauses the tool before it runs and waits for a person to approve the call. See [Gated Tools](gated-tools.md). |
+| **Inputs and Mapping** | No | The action's parameters and how they map to the tool's inputs. |
+| **OAuth Client Configuration** | No | OAuth client settings when the knowledge base action requires them. |
+| **Result Type** | No | The Ballerina type returned by the selected action. |
+
+After saving, the selected knowledge base action becomes available to the agent as a tool. See [Knowledge Bases](../ai-building-blocks/knowledge-bases.md) for the supported knowledge base types and their actions.
+
+## 6. Create custom tool
 
 Use this option when you want to define a tool before implementing its logic, or when the tool requires a fully custom structure.
 
