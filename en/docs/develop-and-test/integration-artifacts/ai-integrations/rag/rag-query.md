@@ -1,8 +1,8 @@
 ---
 sidebar_position: 3
 title: RAG Query
-description: How to build a RAG query integration in WSO2 Integrator. Retrieve relevant chunks from a knowledge base, augment the user query, and generate a grounded response.
-keywords: [wso2 integrator, rag, rag query, knowledge base, retrieve, augment, generate]
+description: Build a RAG query integration that retrieves indexed content from a WSO2 Cloud Knowledge Base and generates a grounded response.
+keywords: [wso2 integrator, wso2 cloud, rag, rag query, knowledge base, retrieve, augment, generate]
 slug: /develop-and-test/integration-artifacts/ai-integrations/rag/rag-query
 ---
 
@@ -11,12 +11,12 @@ import useBaseUrl from '@docusaurus/useBaseUrl';
 
 # RAG Query
 
-The query integration runs on every user request. It retrieves relevant chunks from the vector knowledge base populated during ingestion, combines them with the user's question, and calls the LLM to produce a grounded response.
+The query integration runs on every user request. It retrieves relevant chunks from a WSO2 Cloud Knowledge Base populated in WSO2 Cloud, combines them with the user's question, and calls the LLM to produce a grounded response.
 
 This page covers building the query integration in WSO2 Integrator: wiring up retrieve, augment, and generate nodes, and testing the endpoint.
 
 :::info
-Complete [RAG ingestion](rag-ingestion.md) before starting this page. The query integration reads from the same Knowledge Base that ingestion writes to.
+Complete [RAG ingestion](rag-ingestion.md) before starting this page. Create the knowledge base and ingest its documents in WSO2 Cloud, then connect that same knowledge base to this integration.
 :::
 
 ---
@@ -40,8 +40,8 @@ The four nodes, **Retrieve**, **Augment User Query**, **Generate**, and **Return
 
 :::info Prerequisites
 
-- The ingestion integration from [RAG ingestion](rag-ingestion.md) has been run at least once so the Knowledge Base contains vectors.
-- The same Knowledge Base and Embedding Provider used during ingestion are available in this project.
+- A WSO2 Cloud Knowledge Base has been created and populated by following [RAG ingestion](rag-ingestion.md).
+- WSO2 Integrator is signed in to the same WSO2 Cloud organization, with the project containing the knowledge base selected.
 - A configured model provider. The default WSO2 provider works out of the box. Run `Ballerina: Configure default WSO2 model provider` if you haven't already.
 - An **HTTP service** with a `POST /query` resource and a `userQuery` string payload parameter. See Step 1 below.
 
@@ -103,15 +103,15 @@ The four nodes, **Retrieve**, **Augment User Query**, **Generate**, and **Return
 
 ---
 
-## Step 2: Retrieve from the knowledge base
+## Step 2: Connect and retrieve from the knowledge base
 
-The **Retrieve** action queries the Knowledge Base for chunks most similar to the user's question.
+Connect the existing WSO2 Cloud Knowledge Base to the integration, then use its **Retrieve** action to find chunks most similar to the user's question.
 
 1. In the flow editor, select **+** to open the **Add Node** panel.
 2. Go to **AI > RAG** and select **Knowledge Base**.
 
     :::info
-    If you don't have a Knowledge Base yet, create one first by following [Knowledge Bases](../ai-building-blocks/knowledge-bases.md). Use the same Knowledge Base as ingestion. For the in-memory knowledge base, both ingestion and querying must be done in the same integration.
+    If the knowledge base has not been created and populated yet, follow [RAG ingestion](rag-ingestion.md) first. Ingestion takes place in WSO2 Cloud, not in this query flow.
     :::
 
     <ThemedImage
@@ -122,17 +122,29 @@ The **Retrieve** action queries the Knowledge Base for chunks most similar to th
         }}
     />
 
-3. The **Knowledge Bases** panel lists your existing connection (for example `aiVectorknowledgebase`, the same one created during ingestion). Select it to expand it, then select **Retrieve**, *"Retrieves relevant chunk for the given query."*
+3. If the knowledge base is not already connected to this integration project, select **Add Knowledge Base**, and then select **WSO2 Cloud Knowledge Base**.
+4. Under **Existing WSO2 Cloud Knowledge Bases**, select the knowledge base that you populated during ingestion.
 
     <ThemedImage
-        alt="aiVectorknowledgebase connection expanded showing Ingest, Retrieve, and Delete By Filter actions, with the Retrieve tooltip visible."
+        alt="WSO2 Cloud Knowledge Bases picker listing the knowledge bases available in the selected WSO2 Cloud project."
         sources={{
-            light: useBaseUrl('/img/genai/develop/rag-v5.1/rag-query/07-retrieve-action-selected-v5.1.png'),
-            dark: useBaseUrl('/img/genai/develop/rag-v5.1/rag-query/07-retrieve-action-selected-v5.1.png'),
+            light: useBaseUrl('/img/genai/develop/components-v5.1/knowledge-bases/07-wso2-cloud-list-v5.1.png'),
+            dark: useBaseUrl('/img/genai/develop/components-v5.1/knowledge-bases/07-wso2-cloud-list-v5.1.png'),
         }}
     />
 
-4. Configure the node:
+5. Review the prefilled service URL and authentication configuration, optionally adjust the retrieval settings, and select **Save**.
+
+    <ThemedImage
+        alt="Create WSO2 Cloud Knowledge Base form with the service URL and authentication configuration filled from the selected cloud knowledge base."
+        sources={{
+            light: useBaseUrl('/img/genai/develop/components-v5.1/knowledge-bases/08-wso2-cloud-prefilled-form-v5.1.png'),
+            dark: useBaseUrl('/img/genai/develop/components-v5.1/knowledge-bases/08-wso2-cloud-prefilled-form-v5.1.png'),
+        }}
+    />
+
+6. Expand the new WSO2 Cloud Knowledge Base connection in the **Knowledge Bases** panel and select **Retrieve**, *"Retrieves relevant chunk for the given query."*
+7. Configure the node:
 
     | Field | Required | Value |
     | --- | --- | --- |
@@ -141,7 +153,7 @@ The **Retrieve** action queries the Knowledge Base for chunks most similar to th
     | **Filters** | No | Metadata filters to restrict results. Useful for multi-tenant scenarios where users should only see their own documents. |
     | **Result** | Yes | For example, `context`. **Result Type** is locked to `ai:QueryMatch[]`. |
 
-5. Select **Save**.
+8. Select **Save**.
 
     <ThemedImage
         alt="ai:retrieve form with Query set to payload.userQuery, Top K default 10, Filters empty, and Result set to context."
@@ -154,7 +166,7 @@ The **Retrieve** action queries the Knowledge Base for chunks most similar to th
 The result is an array of `ai:QueryMatch` values. Each entry contains a chunk and its similarity score against the query.
 
 :::info
-Retrieve is the read-side counterpart to Ingest. It must point to the same Knowledge Base and the same Embedding Provider. Pointing to a different one returns no useful results.
+The WSO2 Cloud Knowledge Base handles embedding and retrieval. The query integration does not need a separate vector store or embedding provider; it only needs to connect to the same cloud knowledge base that contains the ingested documents.
 :::
 
 <ThemedImage
@@ -283,19 +295,63 @@ The response will be grounded in the documents you ingested.
 
 ---
 
+## Use the knowledge base as an agent tool
+
+Steps 2 to 6 build a fixed flow: every request calls **Retrieve** with the user's question, then augments and generates. You can instead give the WSO2 Cloud Knowledge Base to an AI agent as a tool. The agent decides when to search the knowledge base and what to search for, then answers using the chunks it gets back.
+
+| | Fixed RAG flow (Steps 2 to 6) | Knowledge base as an agent tool |
+| --- | --- | --- |
+| **When Retrieve runs** | On every request. | Only when the agent decides it needs the knowledge base. |
+| **Search query** | The user's question, unchanged. | Written by the agent, so it can rephrase, narrow, or search more than once. |
+| **Best for** | Single-turn question answering over one knowledge base. | Conversations, and agents that combine the knowledge base with other tools. |
+
+### Add the knowledge base tool
+
+1. Open the agent and click the **+** button on the **AI Agent** node to open the **Add Tool** panel.
+2. Select **Use Knowledge Base**.
+3. Select **WSO2 Cloud Knowledge Base**, and then select the **Retrieve** action. The **Add Tool - Use Knowledge Base** panel opens.
+
+    <ThemedImage
+        alt="Add Tool - Use Knowledge Base panel for the WSO2 Cloud Knowledge Base retrieve action, with Tool Name retrieveTool, a prefilled description, and a Knowledge Base Instance field showing No knowledge bases in this project with a Create knowledge base button."
+        sources={{
+            light: useBaseUrl('/img/genai/develop/components-v5.1/knowledge-bases/07-wso2-cloud-create-v5.1.png'),
+            dark: useBaseUrl('/img/genai/develop/components-v5.1/knowledge-bases/07-wso2-cloud-create-v5.1.png'),
+        }}
+    />
+
+4. Configure the tool:
+
+    | Field | Required | Value |
+    | --- | --- | --- |
+    | **Tool Name** | Yes | A unique name for the tool, for example `retrieveTool`. |
+    | **Description** | No | What the tool does. The agent reads this to decide when to call the tool, so describe the content in the knowledge base, for example `Retrieves HR policy content for the given query.` |
+    | **Knowledge Base Instance** | Yes | The WSO2 Cloud Knowledge Base connection from [Step 2](#step-2-connect-and-retrieve-from-the-knowledge-base). If the project has none yet, click **Create knowledge base** and select the knowledge base that you populated during [RAG ingestion](rag-ingestion.md). |
+    | **Requires Approval** | No | Pauses the tool before it runs and waits for a person to approve the call. |
+
+5. Select **Save**.
+
+The **Retrieve** action is now available to the agent as a tool. When a user asks a question, the agent calls the tool with a query it writes, receives the matching chunks with their `similarityScore`, and uses them to ground its answer. You don't need separate **Augment User Query** or **Generate** nodes; the agent's own model provider handles both.
+
+:::note
+The agent only reads from the knowledge base. To add or update documents, ingest them in WSO2 Cloud as described in [RAG ingestion](rag-ingestion.md).
+:::
+
+For the other tool types and tool settings, see [Tools](../agents/tools.md).
+
+---
+
 ## Tuning retrieval quality
 
 | Parameter | Where | What it does |
 | --- | --- | --- |
 | **Top K** | Retrieve node | Controls how many chunks are passed to the LLM. Too few and relevant content is missed; too many and the model gets noisy context. Start at `5`-`10`. |
 | **Filters** | Retrieve node | Restrict results by metadata. Use a `source` or `tenantId` field to isolate results per user or document set. |
-| **Chunker** | Knowledge Base (ingestion) | Affects chunk boundaries and size. Switch from `AUTO` to a structure-aware chunker (Markdown, HTML) if retrieval quality is poor. Re-ingest after changing. |
+| **Content and ingestion settings** | WSO2 Cloud | Affect which content is indexed and how it is prepared for retrieval. Update the source or ingestion configuration in WSO2 Cloud, then re-ingest. |
 
 ---
 
 ## What's next
 
-- **[RAG ingestion](rag-ingestion.md)** — populate the knowledge base the query integration reads from.
-- **[Knowledge Bases](../ai-building-blocks/knowledge-bases.md)** — retrieve, delete-by-filter, and tuning reference.
-- **[Embedding Providers](../ai-building-blocks/embedding-providers.md)** — available providers and dimension requirements.
-- **[Chunkers](../ai-building-blocks/chunkers.md)** — controlling how documents are split for better retrieval.
+- **[RAG ingestion](rag-ingestion.md)** — create and populate the knowledge base in WSO2 Cloud.
+- **[WSO2 Cloud Knowledge Base](../ai-building-blocks/knowledge-bases.md#wso2-cloud-knowledge-base)** — connection and retrieval configuration reference.
+- **[Tools](../agents/tools.md)** — add knowledge bases and other tools to an AI agent.
