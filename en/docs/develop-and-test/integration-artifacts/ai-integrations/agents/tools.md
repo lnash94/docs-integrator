@@ -31,7 +31,7 @@ To add a tool to an agent, click the **+** button on the **AI Agent** node in th
 This opens the **Add Tool** panel, where you can choose how to add capabilities to the agent.
 
 <ThemedImage
-    alt="The Add Tool panel listing Use Connection, Use Function, Use Agent, Use MCP Server, and Create Custom Tool, each with a one-line description."
+    alt="The Add Tool panel listing Use Connection, Use Function, Use Agent, Use MCP Server, Use Knowledge Base, and Create Custom Tool, each with a one-line description."
     sources={{
         light: useBaseUrl('/img/genai/develop/agents-v5.1/tools/02-add-tool-panel-v5.1.png'),
         dark: useBaseUrl('/img/genai/develop/agents-v5.1/tools/02-add-tool-panel-v5.1.png'),
@@ -46,7 +46,7 @@ The following tool integration options are available:
 | **Use Function** | Expose an existing project function or standard library function as an agent tool. |
 | **Use Agent** | Delegate to another agent, wrapped as a tool, so this agent can hand off requests and use the response. |
 | **Use MCP Server** | Connect to tools hosted on a remote MCP server, including custom, community, or SaaS MCP endpoints. |
-| **Use Knowledge Base** | Wrap a knowledge base action as a tool so the agent can retrieve relevant content or ingest documents. |
+| **Use Knowledge Base** | Give the agent a Retrieve tool for an existing or newly created knowledge base. |
 | **Create Custom Tool** | Define a new tool by specifying its name, description, parameters, and return type directly from the UI. |
 
 Each option opens a dedicated configuration panel for setting up the selected tool type.
@@ -207,14 +207,14 @@ After saving, every tool exposed by the MCP server, or every tool selected in **
 Selecting **Use Knowledge Base** lets you choose an existing knowledge base in the integration or browse the available knowledge base types.
 
 <ThemedImage
-    alt="The Add Tool - Use Knowledge Base picker in WSO2 Agent Builder. It lists productKb from the current integration and the available Vector Knowledge Base, Azure AI Search Knowledge Base, and WSO2 Cloud Knowledge Base types."
+    alt="The Add Tool - Use Knowledge Base picker listing Vector Knowledge Base, Bedrock Managed Knowledge Base, Bedrock Self-Managed Knowledge Base, Azure AI Search Knowledge Base, and WSO2 Cloud Knowledge Base."
     sources={{
         light: useBaseUrl('/img/genai/develop/agents-v5.1/tools/17-use-knowledge-base-picker-v5.1.png'),
         dark: useBaseUrl('/img/genai/develop/agents-v5.1/tools/17-use-knowledge-base-picker-v5.1.png'),
     }}
 />
 
-After you select a knowledge base, select the action to expose to the agent. The available actions depend on the knowledge base implementation and can include retrieving relevant content or ingesting documents.
+After you select a knowledge base, select its **Retrieve** action to expose it to the agent.
 
 For example, selecting **Retrieve** on a Vector Knowledge Base opens the following tool configuration:
 
@@ -236,7 +236,7 @@ For example, selecting **Retrieve** on a Vector Knowledge Base opens the followi
 | **OAuth Client Configuration** | No | OAuth client settings when the knowledge base action requires them. |
 | **Result Type** | No | The Ballerina type returned by the selected action. |
 
-After saving, the selected knowledge base action becomes available to the agent as a tool. See [Knowledge Bases](../ai-building-blocks/knowledge-bases.md) for the supported knowledge base types and their actions.
+After saving, the knowledge base's **Retrieve** action becomes available to the agent as a tool. See [Knowledge Bases](../ai-building-blocks/knowledge-bases.md) for the supported knowledge base types and their configuration fields.
 
 ## 6. Create custom tool
 
