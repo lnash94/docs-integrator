@@ -33,8 +33,8 @@ This opens the **Add Tool** panel, where you can choose how to add capabilities 
 <ThemedImage
     alt="The Add Tool panel listing Use Connection, Use Function, Use Agent, Use MCP Server, Use Knowledge Base, and Create Custom Tool, each with a one-line description."
     sources={{
-        light: useBaseUrl('/img/genai/develop/agents-v5.1/tools/02-add-tool-panel-v5.1.png'),
-        dark: useBaseUrl('/img/genai/develop/agents-v5.1/tools/02-add-tool-panel-v5.1.png'),
+        light: useBaseUrl('/img/genai/develop/agents-v5.1/tools/02-add-tool-panel-v1.0.png'),
+        dark: useBaseUrl('/img/genai/develop/agents-v5.1/tools/02-add-tool-panel-v1.0.png'),
     }}
 />
 
@@ -209,8 +209,8 @@ Selecting **Use Knowledge Base** lets you choose an existing knowledge base in t
 <ThemedImage
     alt="The Add Tool - Use Knowledge Base picker listing Vector Knowledge Base, Bedrock Managed Knowledge Base, Bedrock Self-Managed Knowledge Base, Azure AI Search Knowledge Base, and WSO2 Cloud Knowledge Base."
     sources={{
-        light: useBaseUrl('/img/genai/develop/agents-v5.1/tools/17-use-knowledge-base-picker-v5.1.png'),
-        dark: useBaseUrl('/img/genai/develop/agents-v5.1/tools/17-use-knowledge-base-picker-v5.1.png'),
+        light: useBaseUrl('/img/genai/develop/agents-v5.1/tools/17-use-knowledge-base-picker-v1.0.png'),
+        dark: useBaseUrl('/img/genai/develop/agents-v5.1/tools/17-use-knowledge-base-picker-v1.0.png'),
     }}
 />
 
@@ -221,8 +221,8 @@ For example, selecting **Retrieve** on a Vector Knowledge Base opens the followi
 <ThemedImage
     alt="The Add Tool - Use Knowledge Base panel for the Vector Knowledge Base retrieve action. The Tool Name is retrieveTool, the description is prefilled, productKb is selected as the Knowledge Base Instance, and sections for Inputs and Mapping, OAuth Client Configuration, and Result Type are collapsed."
     sources={{
-        light: useBaseUrl('/img/genai/develop/agents-v5.1/tools/16-use-knowledge-base-config-v5.1.png'),
-        dark: useBaseUrl('/img/genai/develop/agents-v5.1/tools/16-use-knowledge-base-config-v5.1.png'),
+        light: useBaseUrl('/img/genai/develop/agents-v5.1/tools/16-use-knowledge-base-config-v1.0.png'),
+        dark: useBaseUrl('/img/genai/develop/agents-v5.1/tools/16-use-knowledge-base-config-v1.0.png'),
     }}
 />
 
