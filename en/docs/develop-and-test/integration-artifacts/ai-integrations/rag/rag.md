@@ -38,4 +38,4 @@ flowchart LR
 WSO2 Integrator provides both stages as built-in pipeline components:
 
 - **[RAG ingestion](rag-ingestion.md)**: Load documents, chunk them, generate embeddings, and store vectors in a knowledge base.
-- **[RAG query](rag-query.md)**: Retrieve the most relevant chunks, augment the user query, and generate a grounded response.
+- **[RAG query with an agent](rag-query.md)**: Give an agent the knowledge base's Retrieve action as a tool so it can search indexed content and generate a grounded response.

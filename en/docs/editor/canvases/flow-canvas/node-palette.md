@@ -506,7 +506,7 @@ For the ingestion flow, supported formats, and how to point the loader at a dire
     }}
 />
 
-For the full RAG query flow (retrieve, augment, generate), see [RAG query](../../../develop-and-test/integration-artifacts/ai-integrations/rag/rag-query.md).
+For the recommended agent-based workflow, where retrieval is exposed to an AI agent as a tool, see [RAG query with an agent](../../../develop-and-test/integration-artifacts/ai-integrations/rag/rag-query.md).
 
 ### Agent
 
