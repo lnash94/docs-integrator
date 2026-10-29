@@ -1,19 +1,19 @@
 ---
 sidebar_position: 0
 sidebar_label: Overview
-title: Manage AI Services
+title: Managed AI Services
 description: Create and manage knowledge bases, ingestion data sources, vector databases, and AI services on WSO2 Cloud - Integration Platform.
 keywords: [wso2 integrator, wso2 cloud, ai services, knowledge base, rag, ingestion, retrieval, vector database, agent]
 slug: /manage/rag-ingestion
 ---
 
-# Manage AI Services
+# Managed AI Services
 
 Create and manage the cloud services that support AI-powered integrations. Configure reusable knowledge bases, keep them current with data sources, expose them through services, and use them from your integrations and AI agents.
 
-- **[Knowledge Base](./knowledge-bases.md)** — Configure a reusable vector store, embedding model, and chunking strategy, then manage its data sources and services.
+- **[Knowledge Bases](./knowledge-bases/knowledge-bases.md)** — Understand the resources that make up a Knowledge Base.
+- **[Create a Knowledge Base](./knowledge-bases/create-knowledge-base.md)** — Configure a vector store, embedding model, chunking strategy, and optional data source.
+- **[Manage a Knowledge Base](./knowledge-bases/manage-knowledge-base.md)** — Operate data sources, edit configuration, connect applications, and test retrieval.
 - **[Managed vector databases](./vector-databases.md)** — Create and manage the vector databases that back your knowledge bases.
-- **[RAG ingestion automation](./ingestion.md)** — Schedule ingestion to load source files into a vector store.
-- **[RAG retrieval](./retrieval.md)** — Query a vector store to retrieve relevant chunks.
-- **[RAG service](./service.md)** — Ingest, chunk, and retrieve documents programmatically through the RAG service API.
+- **[Add data sources](./knowledge-bases/ingestion.md)** — Add Google Drive or Amazon S3 data sources to a Knowledge Base, run ingestion, and monitor execution.
 - **[Deploy and query an AI agent](./querying.md)** — Deploy an AI agent and query it, using the IT helpdesk chatbot tutorial as an example.

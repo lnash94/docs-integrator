@@ -85,7 +85,7 @@ Managed backing services and resources your integrations can use.
 </PaletteCard>
 
 <PaletteCard icon="rag" href="/manage/rag-ingestion">
-  <h3 class="palette-card-title">Manage AI Services</h3>
+  <h3 class="palette-card-title">Managed AI Services</h3>
   <ul class="palette-card-list">
     <li>Create and manage knowledge bases</li>
     <li>Ingest and retrieve enterprise data</li>
