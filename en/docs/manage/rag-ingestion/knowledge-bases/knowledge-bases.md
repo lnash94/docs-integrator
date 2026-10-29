@@ -83,5 +83,5 @@ From here, you can:
 
 ## Related pages
 
-- [Managed vector databases](../vector-databases.md)
+- [Vector Databases](../vector-databases.md)
 - [Add data sources](./ingestion.md)

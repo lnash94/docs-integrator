@@ -1,5 +1,5 @@
 ---
-sidebar_position: 3
+sidebar_position: 4
 title: "Deploy and Query an AI Agent"
 description: "Deploy an AI agent to WSO2 Integration Platform and query it using the IT helpdesk chatbot tutorial as an example."
 keywords: [wso2 integrator, rag, agent, deploy, query]

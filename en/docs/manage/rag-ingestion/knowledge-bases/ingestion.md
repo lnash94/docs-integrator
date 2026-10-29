@@ -144,4 +144,4 @@ After a successful run, open the **Retrieval** tab and send a query based on the
 ## What's next
 
 - [Manage a Knowledge Base](./manage-knowledge-base.md) — Edit configuration, connect applications, test retrieval, and delete a Knowledge Base.
-- [Managed vector databases](../vector-databases.md) — Learn about the vector stores available to Knowledge Bases.
+- [Vector Databases](../vector-databases.md) — Learn about the vector stores available to Knowledge Bases.
