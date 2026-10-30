@@ -1,14 +1,14 @@
 ---
-title: Gated Tools or Durable Agentic Workflow
+title: Gated Tools vs Durable Agentic Workflow
 description: A quick, tick-and-cross comparison of gated tools and durable agentic workflows in WSO2 Agent Builder, covering capabilities and what each costs to set up.
-keywords: [wso2 agent builder, gated tools, durable agentic workflow, human task, approval gate, comparison, human in the loop]
-sidebar_position: 2.6
-slug: /develop-and-test/integration-artifacts/ai-integrations/agents/gated-tools-or-durable-agentic-workflow
+keywords: [wso2 agent builder, gated tools, durable agentic workflow, human task, approval gate, comparison, human in the loop, hitl]
+sidebar_position: 2
+slug: /develop-and-test/integration-artifacts/ai-integrations/agents/human-in-the-loop/gated-tools-vs-durable-agentic-workflow
 ---
 
-# Gated Tools or Durable Agentic Workflow
+# Gated Tools vs Durable Agentic Workflow
 
-Both features can pause an AI agent so a person approves a call before it runs. A [gated tool](gated-tools.md) stops there. A [durable agentic workflow](product://integrator/develop-and-test/integration-artifacts/workflow/durable-agentic-workflow) can do far more. This doc exists to help you pick one: the table below shows exactly what each one covers, then what each costs to set up.
+Gated tools and durable agentic workflows are two ways to keep a human in the loop: both let a person approve an AI agent's call before it runs. A [gated tool](gate-tools-for-approval.md) adds a yes-or-no approval to an agent you already have. A [durable agentic workflow](product://integrator/develop-and-test/integration-artifacts/workflow/durable-agentic-workflow) goes further: it can wait days for a decision, ask the person for input, and record who decided. Use the tables below to compare what each one covers and what each costs to set up.
 
 ## Capability comparison
 
@@ -45,8 +45,8 @@ Both features can pause an AI agent so a person approves a call before it runs. 
 | **Setup effort** | Tick **Requires Approval** on a tool you already have | Stand up Temporal |
 | **Works today with no new infrastructure** | ✓ | ✗ (The module's own lightweight in-memory engine lets you try it with nothing installed, but it doesn't persist. Production needs Temporal) |
 
-If you only need a yes or no before a tool runs and don't want to run a workflow engine, start with gated tools. If you already run durable workflows, or need anything in the capability table above beyond a yes or no, use a durable agent instead. To create one, select **Add Agent** on the agentic integration's overview, then **Create Durable Agent**. See [Build a Durable Agent](../../../../get-started/quickstarts/build-durable-agent.md) for a walkthrough.
+If you only need a yes or no before a tool runs and don't want to run a workflow engine, start with gated tools. If you already run durable workflows, or need anything in the capability table above beyond a yes or no, use a durable agent instead. To create one, select **Add Agent** on the agentic integration's overview, then **Create Durable Agent**. See [Build a Durable Agent](../../../../../get-started/quickstarts/build-durable-agent.md) for a walkthrough.
 
-By default, **gated tools** need nothing beyond the agent itself. For a pause that survives a restart or resumes on another replica, attach a durable [memory store](memory.md#add-memory-store): PostgreSQL, MSSQL, SQLite, Redis, or Amazon DynamoDB.
+By default, **gated tools** need nothing beyond the agent itself. For a pause that survives a restart or resumes on another replica, attach a durable [memory store](../memory.md#add-memory-store): PostgreSQL, MSSQL, SQLite, Redis, or Amazon DynamoDB.
 
 For a first try with nothing installed, **durable agentic workflows** can run on the `ballerina/workflow` module's own lightweight in-memory engine, though it doesn't persist. For a run that survives a restart, use [Temporal](product://integrator/develop-and-test/integration-artifacts/workflow/durable-workflow/deployment-modes): a local server for development, and self-hosted or cloud for production.

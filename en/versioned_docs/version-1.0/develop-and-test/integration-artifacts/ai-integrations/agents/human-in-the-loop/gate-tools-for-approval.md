@@ -1,9 +1,9 @@
 ---
-sidebar_position: 2.5
+sidebar_position: 1
 title: Gate Tools for Approval
 description: Gate a tool so a WSO2 Agent Builder AI agent pauses for approval before it runs, then approve or reject and resume the run.
-keywords: [wso2 agent builder, gated tools, tool approval, approval gate, human in the loop, ai agents, tools]
-slug: /develop-and-test/integration-artifacts/ai-integrations/agents/gated-tools
+keywords: [wso2 agent builder, gated tools, tool approval, approval gate, human in the loop, hitl, ai agents, tools]
+slug: /develop-and-test/integration-artifacts/ai-integrations/agents/human-in-the-loop/gate-tools-for-approval
 ---
 
 import ThemedImage from '@theme/ThemedImage';
@@ -11,14 +11,14 @@ import useBaseUrl from '@docusaurus/useBaseUrl';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Gated Tools
+# Gate Tools for Approval
 
 By default, an agent runs on autopilot. It reasons and calls tools in a loop until it produces an answer, with no opportunity for a person to step in. That is fine for read-only actions such as looking up an order, but risky for sensitive ones such as issuing a refund, deleting a record, or sending an email.
 
-Gating a tool makes the agent pause immediately before it runs that tool, show what it proposes to do, and continue once a person has approved or rejected the tool call.
+Gating a tool adds a human-in-the-loop (HITL) checkpoint. The agent pauses right before executing the tool, displays its proposed action, and waits for a person to approve or reject the call before proceeding.
 
 :::tip Need more than an approval?
-A durable agent keeps the same pause-for-approval, then goes much further: it can wait days for a person or an event, and resume after a restart. See [Build a Durable Agent](../../../../get-started/quickstarts/build-durable-agent.md), and [Gated Tools or Durable Agentic Workflow](gated-tools-or-durable-agentic-workflow.md) for a full comparison.
+A durable agent also pauses for approval, but takes it a step further: it can wait days for a person or an event, and resume right where it left off after a system restart. See [Build a Durable Agent](../../../../../get-started/quickstarts/build-durable-agent.md), and [Gated Tools vs Durable Agentic Workflow](gated-tools-vs-durable-agentic-workflow.md) for a full comparison.
 :::
 
 ## How it works
@@ -52,7 +52,7 @@ Gating is configured on the tool, not on the agent.
         }}
     />
 
-2. Choose how you want to add the tool. For details on each option, see [Tools](tools.md).
+2. Choose how you want to add the tool. For details on each option, see [Tools](../tools.md).
 3. In the tool configuration panel, select **Requires Approval**.
 
     <ThemedImage
@@ -227,7 +227,7 @@ When you chat with the agent through an **Agent Chat** trigger, pending approval
     </TabItem>
     </Tabs>
 
-2. Chat with the agent. See [Try it and run](agents.md#try-it-and-run). When the agent decides to call a gated tool, the chat shows an **Approval required** card with the tool's name and description. Select **Show arguments** to see the values the agent proposes to use.
+2. Chat with the agent. See [Try it and run](../agents.md#try-it-and-run). When the agent decides to call a gated tool, the chat shows an **Approval required** card with the tool's name and description. Select **Show arguments** to see the values the agent proposes to use.
 
     <ThemedImage
         alt="The Agent Chat panel showing an Approval required card for the refundOrder tool, with the arguments amount 400 and orderId 2077 shown, and Approve and Reject buttons."
@@ -276,7 +276,7 @@ A paused run is stored as a checkpoint in the agent's memory store, keyed by the
 | Default in-memory store | No. Pending approvals are lost when the process stops, and another replica cannot see them. |
 | A durable store, such as a database-backed store | Yes. A pause can be resolved after a restart or by another replica. |
 
-The default is fine while you develop and test. For production, where a person may take hours to respond, select **Add Memory** on the **AI Agent** node, then select **Create New Memory Store** and pick a durable store, such as the PostgreSQL, MSSQL, Redis, or Amazon DynamoDB short-term memory store. The same store keeps both the conversation history and the pause checkpoints. See [Memory](memory.md#add-memory-store).
+The default in-memory store is sufficient for development and testing. However, for production environments where human approvals might take hours, configure a durable memory store. To do this, select **Add Memory** on the **AI Agent** node, select **Create New Memory Store**, and choose a durable option, such as PostgreSQL, MSSQL, Redis, or Amazon DynamoDB. This single store persists both the conversation history and the pause checkpoints. See [Memory](../memory.md#add-memory-store).
 
 <ThemedImage
     alt="The Configure Memory panel with the Select Memory Store list showing In Memory, Amazon DynamoDB, MSSQL, PostgreSQL, and Redis short-term memory stores."
@@ -303,6 +303,6 @@ Two habits keep gating useful rather than tiring. Gate the smallest number of to
 
 ## What's next
 
-- **[Tools](tools.md)** — Add functions, connectors, and MCP servers to your agents.
-- **[Memory](memory.md)** — Configure conversational and persistent memory, including durable stores.
-- **[Observability](observability.md)** — Trace which tools the agent selects and when it pauses.
+- **[Tools](../tools.md)** — Add functions, connectors, and MCP servers to your agents.
+- **[Memory](../memory.md)** — Configure conversational and persistent memory, including durable stores.
+- **[Observability](../observability.md)** — Trace which tools the agent selects and when it pauses.
